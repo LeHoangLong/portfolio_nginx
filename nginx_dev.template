@@ -25,7 +25,15 @@ server {
 	#access_log /dev/stdout upstreamlog;
 
     server_name ${PORTFOLIO_HOST};
-	return 301 https://$host$request_uri;
+	
+	# location = / {
+	#   proxy_pass ${PORTFOLIO_SERVER}/index.html;
+	# }
+
+	location / {
+		proxy_pass ${PORTFOLIO_SERVER}/;
+	}
+	
 }
 
 server {
@@ -34,7 +42,13 @@ server {
 	#access_log /dev/stdout upstreamlog;
     server_name ${DASHBOARD_HOST};
 	
-	return 301 https://$host$request_uri;
+	location = / {
+		proxy_pass ${DASHBOARD_SERVER}/index.html;
+	}
+
+	location / {
+		proxy_pass ${DASHBOARD_SERVER}/;
+	}
 }
 
 server {
